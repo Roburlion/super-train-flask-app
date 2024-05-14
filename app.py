@@ -3,13 +3,23 @@
 # Licensed under the MIT License. See LICENSE in the project root for license information.
 #-----------------------------------------------------------------------------------------
 
-from flask import Flask
+from flask import Flask, render_template, jsonify
+
 app = Flask(__name__)
+
+list = ["a", "b", "c"]
 
 @app.route("/")
 def hello():
-    return app.send_static_file("index.html")
+    return render_template("index.html")
+
+@app.route("/templates")
+def templates():
+    return render_template("template.html", list=list)
 
 @app.route("/api")
 def api():
-    return "API response"
+    response = {
+        "message": "API response"
+    }
+    return jsonify(response)
